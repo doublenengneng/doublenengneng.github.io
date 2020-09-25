@@ -6,18 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>小周的博客</title>
+  <title>Mybatis基础(二) | 小周的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小周的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="####参考博客： https:&#x2F;&#x2F;www.warlock.live&#x2F;SSM&#x2F;130.html Mybatis中的动态SQL语句###动态SQL(一)：where与if标签的使用####1.首先需要在实体类中定义一个QueryVo这一实体类    public class QueryVo {    private User user;    List ids; public List&lt;Int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis基础(二)">
+<meta property="og:url" content="http://yoursite.com/2020/09/09/Mybatis%E5%9F%BA%E7%A1%80(%E4%BA%8C)/index.html">
 <meta property="og:site_name" content="小周的博客">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="####参考博客： https:&#x2F;&#x2F;www.warlock.live&#x2F;SSM&#x2F;130.html Mybatis中的动态SQL语句###动态SQL(一)：where与if标签的使用####1.首先需要在实体类中定义一个QueryVo这一实体类    public class QueryVo {    private User user;    List ids; public List&lt;Int">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="d:%5CMyHexoBlogs%5Cblog%5Cpublic%5Cimg%5Cuser.PNG">
+<meta property="og:image" content="d:%5CMyHexoBlogs%5Cblog%5Cpublic%5Cimg%5Crole.PNG">
+<meta property="og:image" content="d:%5CMyHexoBlogs%5Cblog%5Cpublic%5Cimg%5Cuser_role.PNG">
+<meta property="og:image" content="d:%5CMyHexoBlogs%5Cblog%5Cpublic%5Cimg%5Cu_r.PNG">
+<meta property="article:published_time" content="2020-09-09T10:54:18.497Z">
+<meta property="article:modified_time" content="2020-09-11T12:22:28.369Z">
 <meta property="article:author" content="Double">
 <meta property="article:tag" content="技术记录">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:%5CMyHexoBlogs%5Cblog%5Cpublic%5Cimg%5Cuser.PNG">
   
     <link rel="alternative" href="/atom.xml" title="小周的博客" type="application/atom+xml">
   
@@ -161,92 +168,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Mybatis基础(三) " class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Mybatis基础(二)" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/13/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%89)%20/">Mybatis基础(三) </a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/13/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%89)%20/" class="archive-article-date">
-  	<time datetime="2020-09-13T06:18:56.989Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>参考博客： <a href="https://www.warlock.live/SSM/130.html" target="_blank" rel="noopener">https://www.warlock.live/SSM/130.html</a><br>参考博客： <a href="https://www.cnblogs.com/llynic/p/6377783.html" target="_blank" rel="noopener">https://www.cnblogs.com/llynic/p/6377783.html</a></p>
-<h2 id="Mybatis中的延时加载、一级缓存和二级缓存"><a href="#Mybatis中的延时加载、一级缓存和二级缓存" class="headerlink" title="Mybatis中的延时加载、一级缓存和二级缓存"></a>Mybatis中的延时加载、一级缓存和二级缓存</h2><p>###延时加载<br>1.立即加载：不管用不用，只要调用方法，就立马查询<br>2.延时加载：在真正使用数据时才发起查询，不用的时候不查询，按需查询<br>####2.使用<br>1.在mybatis 中默认没有使用延迟加载</p>
-<p>2　在mybatis的配置中  配置一个setting的元素</p>
-<pre><code>&lt;!-- setting中的配置都是针对mybatis的运行行为进行配置的 --&gt;
- &lt;settings&gt;
-     &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
- &lt;/settings&gt;</code></pre><p>3.在mybatis中,延迟加载也是使用动态代理完成的,但是在mybatis中,被代理的对象不是one方,而是many方本身.所以,默认情况下一旦我访问了这个延迟加载对象任何一个属性,都会触发这个延迟加载对象的加载(默认情况下e.getName();也会吃法dept的查询),这不是我们想要的结果,我们想要的是在需要dept的时候,才去查询dept对象.</p>
-<pre><code>&lt;!-- setting中的配置都是针对mybatis的运行行为进行配置的 --&gt;
- &lt;settings&gt;
-     &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
-     &lt;!-- 默认为true,代表只要访问延迟加载对象的任意一个属性,都会导致这个延迟加载对象的完全加载,
-        设置为false,代表按需加载 --&gt;
-    &lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
- &lt;/settings&gt;</code></pre><p>####3.在mybatis中,不管怎么设置,只要访问到one方,one方就会被加载<br>####4.在mybatis中,默认情况下只要调用了equals,clone,hashCode,toString这几个方法,都会对对象进行完全加载<br>    <!-- 改变默认配置,使只有调用clone方法的时候才会触发完全加载 --><br>    <setting name="lazyLoadTriggerMethods" value="clone"/><br>##Mybatis中的缓存<br>####1.概念介绍：<br>    1.什么是缓存：存在于内存中的临时数据<br>    2.为什么使用缓存：减少和数据库的交互次数，提高执行效率<br>    3.什么样的数据能适用缓存、什么样的数据不能适用缓存<br>    1.适用于缓存：<br>        1.经常查询并且不经常改变的数据<br>        2.数据的正确与否对最终结果影响不大的<br>    2.不适用于缓存<br>        1.经常改变的数据<br>        2.数据的正确对最终结果影响很大的<br>####2.Mybatis中的一级和二级缓存<br>    1.一级缓存<br>        1.一级缓存指的是Mybatis中SqlSession对象的缓存<br>        2.当我们执行查询语句之后，查询的结果会同时存入到SqlSession为我们提供的一块区域中，该区域的结构是一个Map，当我们再次查询相同的结果时，Mybatis会先去SqlSession中查询是否含有数据，有的话就直接拿来使用<br>        3.一级缓存消失的一些行为：<br>            1.SqlSession对象消失，Mybatis的一级缓存消失<br>            2.调用SqlSession对象的clearCache()、commit()、close()方法，Mybatis的一级缓存消失<br>            3.SqlSession对象的代理对象(就是执行具体查询方法的对象)调用的方法使用<insert>、<update>、<delete>等标签时，Mybatis的一级缓存消失<br>    2.二级缓存<br>        1.二级缓存指的是Mybatis中SqlSessionFactory对象的缓存，由同一个SqlSessionFactory对象创建的SqlSession对象共享其缓存<br>        2.二级缓存的使用步骤：<br>            1.让Mybatis框架支持二级缓存(在主配置文件中配置)在<configuration>标签中添加：<settings><setting name="cacheEnabled" value="true"/><settings></configuration><br>            2.让当前的映射文件支持二级缓存(在xxxDao.xml进行配置)在<mapper>标签中添加：<cache/>标签</mapper><br>            3.让当前的操作支持二级缓存(在<select>标签中进行配置)在<select>标签中添加：useCache=”true”</select></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/13/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%89)%20/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mybatis基础(二)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/Mybatis%E5%9F%BA%E7%A1%80(%E4%BA%8C)/">Mybatis基础(二)</a>
+    <h1 class="article-title" itemprop="name">
+      Mybatis基础(二)
     </h1>
   
 
@@ -294,6 +223,27 @@ public List&lt;Role&gt; getRoles() {
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -301,16 +251,84 @@ public List&lt;Role&gt; getRoles() {
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/09/Mybatis%E5%9F%BA%E7%A1%80(%E4%BA%8C)/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/09/09/Mybatis%E5%9F%BA%E7%A1%80(%E4%BA%8C)/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/09/13/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%89)%20/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Mybatis基础(三) 
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/08/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%80)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mybatis基础(一)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -330,235 +348,14 @@ public List&lt;Role&gt; getRoles() {
 
 
 
-
   
-    <article id="post-Mybatis基础(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/08/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%80)/">Mybatis基础(一)</a>
-    </h1>
   
 
-        
-        <a href="/2020/09/08/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%80)/" class="archive-article-date">
-  	<time datetime="2020-09-08T01:08:12.096Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>####参考博客： <a href="https://www.warlock.live/SSM/124.html" target="_blank" rel="noopener">https://www.warlock.live/SSM/124.html</a><br>##Mybatis在IDEA上的基本环境配置<br>###1.使用Maven来创建一个简单的Mybatis项目<br>###2.在pom.xml中添加Mybatis框架需要依赖的坐标（jar包）<br>###3.完成主要配置文件的编写(数据库连接和指定映射配置文件的位置[目的是为了不用自己实现数据库查询方法])<br>###4.完成指定映射配置文件的位置，即UserDao.xml</p>
-<p>##使用Nybatis完成对数据库的CRUD操作（都是在UserDao.xml的完成sql语句书写）<br>###1.查询操作，在UserDao.xml,添加查询语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 配置查询所有 --&gt; &lt;!--id对应dao接口中定义的方法 resultType对应查询结果的对应实体类 --&gt;</span><br><span class="line">&lt;select id&#x3D;&quot;findAll&quot; resultType&#x3D;&quot;live.warlock.domain.User&quot;&gt;select * from user;&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
-<p>###2.增加操作，在UserDao.xml,添加增加语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 保存用户 --&gt; &lt;!--id对应dao接口中定义的方法 parameterType对应实体类的属性(注意赋值的语法#&#123;xxx&#125;) --&gt;</span><br><span class="line">&lt;insert id&#x3D;&quot;saveUser&quot; parameterType&#x3D;&quot;live.warlock.domain.User&quot;&gt;insert into user(username, address, sex, birthday) values (#&#123;username&#125;, #&#123;address&#125;, #&#123;sex&#125;, #&#123;birthday&#125;);&lt;&#x2F;insert&gt;</span><br></pre></td></tr></table></figure>
-<p>###3.删除操作，在UserDao.xml,添加删除语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 删除用户 --&gt;</span><br><span class="line">&lt;delete id&#x3D;&quot;deleteUser&quot; parameterType&#x3D;&quot;int&quot;&gt;delete from user where id &#x3D; #&#123;id&#125;;&lt;&#x2F;delete&gt;</span><br></pre></td></tr></table></figure>
-<p>###4.更新操作，在UserDao.xml,添加更改语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 更新用户 --&gt;</span><br><span class="line">&lt;update id&#x3D;&quot;updateUser&quot; parameterType&#x3D;&quot;live.warlock.domain.User&quot;&gt;update user set username &#x3D; #&#123;username&#125;, address &#x3D; #&#123;address&#125;, sex &#x3D; #&#123;sex&#125;, birthday &#x3D; #&#123;birthday&#125; where id &#x3D; #&#123;id&#125;;&lt;&#x2F;update&gt;</span><br></pre></td></tr></table></figure>
-<p>###5.模糊查询操作，在UserDao.xml,添加模糊查询语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 根据名称模糊查询用户 --&gt; &lt;!-- 使用模糊查询时，在调用方法时需要传参(&quot;%xxxx%&quot;) --&gt;</span><br><span class="line">&lt;select id&#x3D;&quot;findUserByName&quot; parameterType&#x3D;&quot;String&quot; resultType&#x3D;&quot;live.warlock.domain.User&quot;&gt;select  * from user where username like #&#123;name&#125;;&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
-<p>###6.聚合运算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 获取用户的总记录条数 --&gt;</span><br><span class="line">&lt;select id&#x3D;&quot;findTotal&quot; resultType&#x3D;&quot;int&quot;&gt;select count(*) from user;&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
-<p>##入门案例<br>###Mybatis快速入门案例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">  public class MybatisTest &#123;</span><br><span class="line">       InputStream in;</span><br><span class="line">       SqlSession sqlSession;</span><br><span class="line">       IUserDao userDao;</span><br><span class="line">       @Before</span><br><span class="line">       public void init() throws Exception&#123;</span><br><span class="line">       &#x2F;&#x2F;1.读取配置文件</span><br><span class="line">           in &#x3D; Resources.getResourceAsStream(&quot;SqlMapConfig.xml&quot;);</span><br><span class="line">           &#x2F;&#x2F;2.创建SqlSessionFactory工厂</span><br><span class="line">           SqlSessionFactory factory &#x3D; new SqlSessionFactoryBuilder().build(in);</span><br><span class="line">           &#x2F;&#x2F;3.使用工厂生产SqlSession对象</span><br><span class="line">           sqlSession &#x3D; factory.openSession();</span><br><span class="line">           &#x2F;&#x2F;4.使用SqlSession创建dao接口的代理对象</span><br><span class="line">           userDao &#x3D; sqlSession.getMapper(IUserDao.class);</span><br><span class="line">   &#125;</span><br><span class="line">   @After</span><br><span class="line">   public void destory() throws Exception&#123;</span><br><span class="line">           &#x2F;&#x2F;提交事务</span><br><span class="line">           sqlSession.commit();</span><br><span class="line">           &#x2F;&#x2F;6.释放资源</span><br><span class="line">           sqlSession.close();</span><br><span class="line">           in.close();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   &#x2F;**</span><br><span class="line">        * 入门案例</span><br><span class="line">        * 测试查询所有</span><br><span class="line">        *&#x2F;</span><br><span class="line">       @Test</span><br><span class="line">       public void testFindAll() throws IOException &#123;</span><br><span class="line"></span><br><span class="line">           &#x2F;&#x2F;5.执行查询所有方法</span><br><span class="line">           List&lt;User&gt; users &#x3D; userDao.findAll();</span><br><span class="line">           for (User user:users) &#123;</span><br><span class="line">               System.out.println(user);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/08/Mybatis%E5%9F%BA%E7%A1%80(%E4%B8%80)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-博客搭建笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/04/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/">搭建博客笔记</a>
-    </h1>
   
 
-        
-        <a href="/2020/07/04/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-07-04T04:14:51.793Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##安装Nodejs<br>node -v    #查看node版本<br>npm -v    #查看npm版本<br>npm install -g cnpm –registry=<a href="http://registry.npm.taobao.org" target="_blank" rel="noopener">http://registry.npm.taobao.org</a>    #安装淘宝的cnpm 管理器<br>cnpm -v    #查看cnpm版本<br>cnpm install -g hexo-cli    #安装hexo框架<br>hexo -v    #查看hexo版本<br>mkdir blog    #创建blog目录<br>cd blog     #进入blog目录<br>sudo hexo init     #生成博客 初始化博客<br>hexo s    #启动本地博客服务<br><a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>    #本地访问地址<br>hexo n “我的第一篇文章” #创建新的文章<br>##返回blog目录<br>hexo clean #清理<br>hexo g #生成<br>##Github创建一个新的仓库 YourGithubName.github.io<br>cnpm install –save hexo-deployer-git #在blog目录下安装git部署插件</p>
-<h2 id="配置-config-yml"><a href="#配置-config-yml" class="headerlink" title="##配置_config.yml "></a>##配置_config.yml </h2><pre><code># Deployment
-## Docs: https://hexo.io/docs/deployment.html
-deploy:
-      type: git
-     repo: https://github.com/YourGithubName/YourGithubName.github.io.git
-      branch: master</code></pre><hr>
-<p>hexo d    #部署到Github仓库里<br><a href="https://YourGithubName.github.io/" target="_blank" rel="noopener">https://YourGithubName.github.io/</a>  #访问这个地址可以查看博客</p>
-<p> git clone <a href="https://github.com/litten/hexo-theme-yilia.git" target="_blank" rel="noopener">https://github.com/litten/hexo-theme-yilia.git</a> themes/yilia  #下载yilia主题到本地</p>
-<p>##修改hexo根目录下的 _config.yml 文件 ： theme: yilia</p>
-<p>hexo c    #清理一下<br>hexo g    #生成<br>hexo d    #部署到远程Github仓库<br><a href="https://YourGithubName.github.io/" target="_blank" rel="noopener">https://YourGithubName.github.io/</a>  #查看博客</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/04/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-笔试面试" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/04/%E7%AC%94%E8%AF%95%E9%9D%A2%E8%AF%95/">笔试面试</a>
-    </h1>
   
 
-        
-        <a href="/2020/07/04/%E7%AC%94%E8%AF%95%E9%9D%A2%E8%AF%95/" class="archive-article-date">
-  	<time datetime="2020-07-04T02:48:51.318Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>###1.转发和重定向的特点：</p>
-<pre><code>转发：
- 1.地址栏路径不变
- 2.只能访问当前服务器下的资源
- 3.是一次请求，可以使用reques他来共享数据
-
-重定向：
-    1.地址栏路径发生变化
-    2.可以访问其他站点（服务器）的资源
-    3.是两次请求。</code></pre><hr>
-<p>##基础理解</p>
-<hr>
-<p>##踩坑记录</p>
-<hr>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/04/%E7%AC%94%E8%AF%95%E9%9D%A2%E8%AF%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -581,8 +378,8 @@ deploy:
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
